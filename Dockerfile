@@ -1,7 +1,5 @@
-FROM oracle/graalvm-ce:19.3.0-java11
+FROM graal/ruby:latest
 
-RUN gu install ruby
-RUN yum install git -y
 RUN git clone https://github.com/sausageRoll/danfe-graal.git
 WORKDIR danfe-graal
 RUN ./gradlew build bootJar

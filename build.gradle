@@ -37,7 +37,11 @@ test {
     useJUnitPlatform()
 }
 
-// Use task types
+task buildRubyVM(type: DockerBuildImage) {
+    inputDir = file('./graal-ruby')
+    images.add('graal/ruby:latest')
+}
+
 task buildMyAppImage(type: DockerBuildImage) {
     inputDir = file('./')
     images.add('danfe:latest')
