@@ -43,6 +43,7 @@ task buildRubyVM(type: DockerBuildImage) {
 }
 
 task buildMyAppImage(type: DockerBuildImage) {
+    dependsOn 'bootJar'
     inputDir = file('./')
     images.add('danfe:latest')
 }
