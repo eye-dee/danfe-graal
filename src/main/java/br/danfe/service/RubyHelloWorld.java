@@ -12,6 +12,7 @@ public class RubyHelloWorld {
 
     @PostConstruct
     public void rubyHelloWorld() {
+        log.info("rubyHelloWorld started");
         Context polyglot = Context.newBuilder().allowAllAccess(true).build();
         Value array = polyglot.eval("ruby", "[1,2,42,4]");
         int result = array.getArrayElement(2).asInt();
