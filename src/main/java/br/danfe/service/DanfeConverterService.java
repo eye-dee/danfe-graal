@@ -3,6 +3,7 @@ package br.danfe.service;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.graalvm.polyglot.Context;
@@ -14,6 +15,15 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 public class DanfeConverterService {
+
+    private final Context polyglot = Context.newBuilder()
+            .allowAllAccess(true)
+            .build();
+
+    @PreDestroy
+    public void initRubyDanfe() {
+        polyglot.close();
+    }
 
     public Mono<String> convertToPdf(Part part) {
         return part.content()
@@ -27,10 +37,8 @@ public class DanfeConverterService {
                 .collectList()
                 .map(list -> String.join("", list))
                 .map(xml -> {
-                    Context polyglot = Context.newBuilder()
-                            .allowAllAccess(true)
-                            .build();
                     polyglot.eval("ruby", "require \"ruby_danfe\"");
+
                     String outputFileName = UUID.randomUUID().toString();
 
                     polyglot.getPolyglotBindings().putMember("xml", xml);
