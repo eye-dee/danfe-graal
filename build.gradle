@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.graalvm.sdk:polyglot-tck:19.3.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
